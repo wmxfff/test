@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>数据采集</title>
+</head>
+<style type="text/css">
+
+	html,body{
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+		/*background-image: linear-gradient(#4682B4,#4169E1);*/
+	}
+	body,
+        html,
+        #container {
+        	border-radius: 1vw;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+         
+        }
+.container{
+	z-index: 10;
+}
+
+.datapage{
+	position: absolute;
+	border-radius: 2vh;
+	background-color: green;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+	opacity: 1;
+	} 
+.datapage_button{
+	position: absolute;
+	background-color:green;
+	width: 123%;
+	height: 100%;
+	z-index: -10;
+	opacity: 1;
+	left: -5vw;
+	border-radius:5vh;
+	} 
+
+
+	.div1{
+		position: absolute;
+		margin-left: -1vw;
+		background-color:#7FFFAA;
+		width: 101vw;
+		height: 16vh;
+		z-index: 10;
+	}
+	.div2{
+		border-radius: 1vw;
+		position: absolute;
+		margin-left: 1.5vw;
+		margin-right:0; 
+		margin-top: 20vh;
+		background-color:white;
+		width: 17vw;
+		height: 70vh;
+		z-index: 10;
+	}
+	.div3{
+		position: absolute;
+		border-radius: 1vw;
+		margin-left: 10vw;
+		margin-right:0; 
+		margin-top: 20vh;
+		background-color:#7FFFAA;
+		width: 55vw;
+		height: 70vh;
+		z-index: 10;
+	}
+	.button{
+	width: 10vw;
+	height: 14vh;	
+	z-index: 100;
+	margin-top: 2vh;
+	margin: 1vh;
+	margin-color: red;
+	opacity: 0;
+	}
+	.icon{
+		position: absolute;
+		width:7vw;
+		height: 10vh;
+		margin-top: 3vh; 
+		
+
+	}
+.map_button{
+height: 100%;
+z-index: 10;
+ 
+
+}
+#change-btn {
+	font-family: Georgia;
+  width: 17vw;
+  height: 10vh;
+ border-radius: 1vh;
+ background-color: 	#00CED1;
+  border: none;
+ font-size: 1.5vw;
+  position: relative;
+  margin-left: 2vw;
+  margin-bottom: 2vh;
+  text-align: left;
+}
+
+#change-btn:active {
+ background-color:	#40E0D0;
+}
+
+#change-btn:after {
+  content: "";
+  width: 0;
+  height: 0;
+  right: 0;
+  top: 0;
+  display: block;
+  border-top: 5.0vh solid #187dbc;
+  border-bottom: 5.0vh solid #187dbc;
+  border-left: 8vh solid transparent;
+  border-right: 4vh solid #187dbc;
+  position: absolute;
+  opacity: 0.4; 
+  border-radius: 0 1vh 1vh 0;  
+
+}
+
+
+#desc {
+	margin-top:-8vh; 
+	font-family: arial;
+  width: 16vw;
+  height: 15vh;
+ border-radius: 1vh;
+z-index: 15;
+ font-size: 1vw;
+  text-align: left;
+}
+
+
+#desc:focus{
+
+
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1vh 1vh rgba(0,0,0,.075),0 0 8vh rgba(102,175,233,.6);
+    box-shadow: inset 0 1vh 1vh rgba(0,0,0,.075),0 0 8vh rgba(102,175,233,.6)
+
+
+}
+#desc2 {
+	font-family: arial;
+  width: 16vw;
+  height: 5vh;
+ border-radius: 1vh;
+z-index: 15;
+ font-size: 1vw;
+  text-align: left;
+  margin-left: 2vw;
+}
+
+
+#desc2:focus{
+
+
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1vh 1vh rgba(0,0,0,.075),0 0 8vh rgba(102,175,233,.6);
+    box-shadow: inset 0 1vh 1vh rgba(0,0,0,.075),0 0 8vh rgba(102,175,233,.6)
+
+
+}
+.database_input {
+	position: absolute;
+	font-family: arial;
+  width: 26vw;
+  height: 5vh;
+ border-radius: 1.5vh;
+ border-color: 	white;
+z-index: 15;
+ font-size: 1vw;
+  text-align: left;
+  outline: none;
+}
+.database_input:focus{
+
+
+    border-color: 	#1E90FF;
+   
+
+}
+
+
+
+.database_button{
+
+position: absolute;
+width: 27vw;
+height: 6vh;
+margin-top: 17vh;
+border:none;
+border-radius: 2vh;
+background-color: 	#87CEFA;
+}
+</style>
+
+<script src="http://api.map.baidu.com/api?type=webgl&v=3.0&ak=u3iML8kddx9beUx9i3w1xc4pFaTBP65F">
+	
+</script>
+
+<body class="body" onload="checkcookie(),set()">
+
+
+
+<div class="div1">
+	<img src="images/map_onclick.png" class="icon" id="map_onclick" style="margin-left:18.5vw;opacity: 1 ">
+	<img src="images/map_offclick.png" class="icon" id="map_offclick" style="margin-left:18.5vw;opacity: 0;  ">
+	<p style="left: 26vw; position: absolute; font-size: 4vh;top:  3vh; font-family: FangSong_GB2312">地图</p>
+
+	<img src="images/data_onclick.png" class="icon" id="data_onclick" style="margin-left:42vw; opacity: 0;">
+	<img src="images/data_offclick.png" class="icon" id="data_offclick" style="margin-left:42vw;opacity: 1;">
+	<p style="left: 51vw; position: absolute; font-size: 4vh; top: 3vh" >数据库</p>
+	<button onclick="showmap()" class="button" style="margin-left:17vw; " id ="but1"> </button>
+	<button onclick="showdata()" class="button" style="margin-left:14vw; " id="but2"></button>
+
+</div>
+<div class="div2"></div>
+<div class="div3" >  
+
+<div  class="datapage" style="z-index: -50; " id="datapage_after">
+
+</div>
+
+<div class="datapage" >
+	
+
+<div style="position: absolute; left: 15vw;">
+<h2 style="margin-left: 6vw;margin-bottom: 10vh; margin-top: 10vh">数据库管理员登录</h2>
+<form  method="post" action="check.php">
+<input type="text" class="database_input" id="database_input" name="a" required="required" placeholder="管理员账号">	
+<input type="password" class="database_input"  required="required" placeholder="密码"  id="database_password" name="b" style=" margin-top: 10vh">
+<input class="database_button" id="database_button"  type="submit" value="登录">
+</form>
+
+
+</div>
+</div>
+	<div id="container" class="container"></div>
+
+</div>
+
+<div class="div2" style="margin-left: 80vw" >
+	
+
+
+
+
+
+	<div class="datapage_button" id="datapage_button" style="display: none;">
+
+
+<form action="search.php" method="post" target="iframe">
+ <input type="text" id="desc2" value="" style="margin-top: 10vh;" placeholder="输入xx" name="feature">
+        <input type="submit" id="change-btn"  value="查询" style="margin-top: 2vh;"  ></input>
+
+</form>
+<form action="show.php" method="post" target="iframe">
+        <input type="submit" id="change-btn"  value="查看(评分、删除)" style="margin-top: 1vh;"  ></input>
+
+</form>
+
+
+
+<iframe style="display: none; "></iframe>
+
+<button id="change-btn" onclick="clearcookie()">退出登录</button>
+	</div>
+	
+
+<div class="datapage_button" style="background-color: green;border-radius:5vh;" >
+
+	<div id="map_button" class="map_button" style="left: 0vw; position: absolute;">
+        <button id="change-btn" onclick="setNewCenter(),set() " style="margin-top: 10vh;" >随机地图中心点</button>
+        <button id="change-btn" onclick="getMapCenter()" style="margin-top: 2vh;" >获取当前中心点</button>
+        
+       <form  method="post" action="data.php" target="iframe" style="margin-top: 10vh;" >
+<input type="text" name="cen_x" id="cen_x" value="" style="position: absolute;width: 0; height: 0 ;display: none;" placeholder="">
+<input type="text" name="cen_y" id="cen_y"  value="" style="position:absolute;width: 0;height: 0 ;display: none;" placeholder="">
+<input type="text" name="lt_x" id="lt_x"  value="" style=" position: absolute;width: 0; height: 0 ;display: none;" placeholder="">
+<input type="text" name="lt_y" id="lt_y"  value="" style=" position: absolute;width: 0; height: 0 ;display: none;" placeholder="">
+<input type="text" name="lb_x" id="lb_x"  value="" style=" position: absolute;width: 0; height: 0 ;display: none;" placeholder="">
+<input type="text" name="lb_y" id="lb_y"  value="" style=" position: absolute;width: 0; height: 0 ;display: none;" placeholder="">
+<input type="text" name="rt_x" id="rt_x"  value="" style=" position: absolute;width: 0; height: 0 ;display: none;" placeholder="">
+<input type="text" name="rt_y" id="rt_y"  value="" style=" position: absolute;width: 0; height: 0 ;display: none;" placeholder="">
+<input type="text" name="rb_x" id="rb_x"  value="" style=" position: absolute;width: 0; height: 0 ;display: none;" placeholder="">
+<input type="text" name="rb_y" id="rb_y" value="" style=" position: absolute;width: 0; height: 0 ;display: none;" placeholder="">
+
+<textarea type="text" id="desc" name="exinf" value=""  style=" position: absolute; margin-left: 2vw; " placeholder="输入描述">
+</textarea>
+<input id="change-btn" onmouseover="checktext()" onclick="submit()" type="submit" value="添加" style="margin-top: 11vh ;width: 4vw;height: 5vh; ">
+        </form>
+<iframe style="display:none;"></iframe>
+
+<!-- <button id="change-btn" onclick="submit()" style="margin-top: 2vh;">下载</button> -->
+	</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="div1" style="margin-top: 97vh ;height: 3vh; text-align: center; font-size: 1vh;">Map To Text数据收集系统    王梦熊、袁鹏、解雪洁</div>
+</body>
+</html>
+<script>
+    var map = new BMapGL.Map('container',{
+        minZoom:18,
+        maxZoom:18
+    });
+
+    map.centerAndZoom(new BMapGL.Point(116.350, 39.900), 18);
+    map.enableScrollWheelZoom(false);
+    function setNewCenter() {
+        var lng = 116.2 + Math.floor(Math.random() * 15) * 0.02;
+        var lat = 39.8 + Math.floor(Math.random() * 10) * 0.02;
+        var point = new BMapGL.Point(lng, lat);
+        map.setCenter(point);
+
+        cen = map.getCenter();
+var bounds = map.getBounds(); 
+
+var sw = bounds.getSouthWest();   
+
+var ne = bounds.getNorthEast(); 
+
+
+// jsonData.lng = cen.lng;
+// jsonData.lat = cen.lat;
+// jsonData.sw_lng = sw.lng;
+// jsonData.sw_lat = sw.lat;
+// jsonData.ne_lng = ne.lng;
+// jsonData.ne_lat = ne.lat;
+
+
+document.getElementById("cen_x").setAttribute('value',cen.lng);
+document.getElementById("cen_y").setAttribute('value',cen.lat);//中心___
+
+document.getElementById("lt_x").setAttribute('value',sw.lng);
+document.getElementById("lt_y").setAttribute('value',ne.lat);//西北
+
+document.getElementById("lb_x").setAttribute('value',sw.lng);
+document.getElementById("lb_y").setAttribute('value',sw.lat);//西南___
+
+document.getElementById("rt_x").setAttribute('value',ne.lng);//东北___
+document.getElementById("rt_y").setAttribute('value',ne.lat);
+
+document.getElementById("rb_x").setAttribute('value',ne.lng);//东南
+document.getElementById("rb_y").setAttribute('value',sw.lat);
+
+
+         // 设置地图中心点
+    }
+function getMapCenter() {
+        var cen = map.getCenter(); // 获取地图中心点
+                              //获取东北角的经纬度(右上端点)
+
+        alert('地图中心点: (' + cen.lng.toFixed(5) + ', ' + cen.lat.toFixed(5) + ')');
+    }
+
+function set(argument) {
+	cen = map.getCenter();
+var bounds = map.getBounds(); 
+
+var sw = bounds.getSouthWest();   
+
+var ne = bounds.getNorthEast(); 
+
+
+// jsonData.lng = cen.lng;
+// jsonData.lat = cen.lat;
+// jsonData.sw_lng = sw.lng;
+// jsonData.sw_lat = sw.lat;
+// jsonData.ne_lng = ne.lng;
+// jsonData.ne_lat = ne.lat;
+
+
+document.getElementById("cen_x").setAttribute('value',cen.lng);
+document.getElementById("cen_y").setAttribute('value',cen.lat);//中心___
+
+document.getElementById("lt_x").setAttribute('value',sw.lng);
+document.getElementById("lt_y").setAttribute('value',ne.lat);//西北
+
+document.getElementById("lb_x").setAttribute('value',sw.lng);
+document.getElementById("lb_y").setAttribute('value',sw.lat);//西南___
+
+document.getElementById("rt_x").setAttribute('value',ne.lng);//东北___
+document.getElementById("rt_y").setAttribute('value',ne.lat);
+
+document.getElementById("rb_x").setAttribute('value',ne.lng);//东南
+document.getElementById("rb_y").setAttribute('value',sw.lat);
+}
+
+function submit() {
+
+var jsonData ={};
+jsonData.num = 1;
+
+cen = map.getCenter();
+var bounds = map.getBounds(); 
+
+var sw = bounds.getSouthWest();   
+
+var ne = bounds.getNorthEast(); 
+
+
+jsonData.lng = cen.lng;
+jsonData.lat = cen.lat;
+jsonData.sw_lng = sw.lng;
+jsonData.sw_lat = sw.lat;
+jsonData.ne_lng = ne.lng;
+jsonData.ne_lat = ne.lat;
+
+
+document.getElementById("cen_x").setAttribute('value',cen.lng);
+document.getElementById("cen_y").setAttribute('value',cen.lat);//中心___
+
+document.getElementById("lt_x").setAttribute('value',sw.lng);
+document.getElementById("lt_y").setAttribute('value',ne.lat);//西北
+
+document.getElementById("lb_x").setAttribute('value',sw.lng);
+document.getElementById("lb_y").setAttribute('value',sw.lat);//西南___
+
+document.getElementById("rt_x").setAttribute('value',ne.lng);//东北___
+document.getElementById("rt_y").setAttribute('value',ne.lat);
+
+document.getElementById("rb_x").setAttribute('value',ne.lng);//东南
+document.getElementById("rb_y").setAttribute('value',sw.lat);
+
+
+
+
+
+jsonData.text = document.getElementById ("desc").value;
+var elementA = document.createElement('a');
+//文件的名称为时间戳加文件名后缀
+elementA.download = +new Date()+ ".json";
+elementA.style.display = 'none';
+//生成一个blob二进制数据，内容为json数据
+var blob = new Blob([JSON.stringify(jsonData)]);
+//生成一个指向blob的URL地址，并赋值给a标签的href属性
+elementA.href = URL.createObjectURL(blob);
+document.body.appendChild(elementA);
+elementA.click();
+document.body.removeChild(elementA);
+
+
+    }
+
+function showmap() {
+
+ // var name=document.getElementByName("but1");
+ // alert("run");
+ // name.style.opacity=1;
+// console.log("run1_1");
+// document.getElementById("but1").addEventListener("click", function()
+// {
+	// console.log("run1_2");
+	var arr2=2;
+	if (document.cookie.match(arr2)) {
+	document.cookie="manager=1; expires=Thu, 18 Dec 2022 12:00:00 GMT ";
+	}
+	document.getElementById("map_offclick").style.opacity=0;
+	document.getElementById("map_onclick").style.opacity=1;
+    document.getElementById("data_offclick").style.opacity=1;
+	document.getElementById("data_onclick").style.opacity=0;
+	document.getElementById("container").style.zIndex=10;
+	document.getElementById("datapage_button").style.zIndex=-10;
+
+
+	hide_showdata_after();
+// });
+}
+
+
+function showdata() {
+
+ // var name=document.getElementByName("but1");
+ // alert("run");
+ // name.style.opacity=1;
+// console.log("run2_1");
+// document.getElementById("but2").addEventListener("click", function()
+// {
+	// console.log("run2_2");
+
+	document.getElementById("map_offclick").style.opacity=1;
+	document.getElementById("map_onclick").style.opacity=0;
+	document.getElementById("data_offclick").style.opacity=0;
+	document.getElementById("data_onclick").style.opacity=1;
+	 document.getElementById("container").style.zIndex=-50;
+
+
+
+ document.getElementById("datapage_button").style.zIndex=20;
+ var obj=1;
+
+    if(arr=document.cookie.match(obj))
+    		
+		showdata_after();	
+		
+    // this.style.opacity=1;
+// });
+
+
+}
+
+function clearcookie(argument) {
+	// body...
+	// document.cookie.setTime('0');
+document.cookie="manager=0; expires=Thu, 18 Dec 2022 12:00:00 GMT";
+// setCookie(manager, "", -1); 
+location.reload();
+
+}
+
+function showdata_after() {
+document.getElementById("container").style.zIndex=50;
+
+}
+function hide_showdata_after(argument) {
+	document.getElementById("datapage_after").style.zIndex=-50;
+
+}
+
+
+function checkcookie()
+{
+    var obj1=1,obj2=2;
+
+    if(arr=document.cookie.match(obj2))
+    	{document.getElementById("datapage_button").style.display="block";
+    		showdata();		
+			showdata_after();
+		
+			
+				// alert("222");	
+		}
+	  if(arr=document.cookie.match(obj1))
+    	{
+
+			document.getElementById("datapage_button").style.display='block';		
+	// window.alert("111");
+		}	
+
+}
+function checktext() {
+	var value=	document.getElementById("desc").value;
+	var length=value.length;
+	var flag=1;
+if (length<5) {
+	flag=0;
+}
+
+		var patt=/^.*([\u554A]{1}|([\u5C4F]{1}[\u853D]{1}[\u8BCD]{1}))+.*$/;//自由添加屏蔽字、词
+	
+		try{
+			if(value=="") throw "未输入"
+			if(patt.test(value)) throw 1
+          
+		}
+		catch(err)	
+		{
+			if (err==1) {
+			alert("屏蔽词");
+			flag=1;}
+		}
+
+if (flag==0) {
+	alert("文本过短");
+}
+}
+
+</script>
